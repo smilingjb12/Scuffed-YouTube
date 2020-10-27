@@ -7,7 +7,8 @@
         *ngFor="let category of categories$ | async">{{category}}</button>
     </div>
     <div class="videos">
-      <app-video-preview class="col-4 mb-4" [video]="video" *ngFor="let video of videos$ | async"></app-video-preview>
+      <app-video-preview class="col-4 mb-4" [video]="video" *ngFor="let video of videos"></app-video-preview>
+      <div *ngIf="!videos">Loading...</div>
     </div>
   </div>
 </div>

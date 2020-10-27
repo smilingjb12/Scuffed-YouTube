@@ -1,17 +1,17 @@
 <div class="info">
   <div class="d-flex justify-content-between">
-    <h2 class="title">{{video.title}}</h2>
+    <h2 class="title">{{video?.title}}</h2>
     <div class="d-flex">
       <div class="views mr-3 text-muted">
-        {{video.views}} <span>view(s)</span>
+        {{video?.views}} <span>view(s)</span>
       </div>
       <div class="likes">
         <svg class="likes-icon" width="32" height="32" fill="currentColor" (click)="likeVideo()">
           <use xlink:href="assets/bootstrap-icons.svg#hand-thumbs-up" />
         </svg>
-        {{video.likes}}
+        {{video?.likes}}
       </div>
     </div>
   </div>
-  <p class="lead my-3">{{video.description}}</p>
+  <p class="lead my-3">{{video?.description}}</p>
 </div>

@@ -101,6 +101,11 @@ export class AppState {
 
   @Action(FetchVideoComments)
   fetchVideoComments(ctx: StateContext<AppStateModel>, action: FetchVideoComments) {
+    const newState = iassign(ctx.getState(), draft => {
+      draft.videoComments = null;
+      return draft;
+    });
+    ctx.setState(newState);
     return this.videoDataService.fetchComments(action.videoId).pipe(tap(comments => {
       const newState = iassign(ctx.getState(), draft => {
         draft.videoComments = comments;
@@ -112,6 +117,12 @@ export class AppState {
 
   @Action(FetchVideo)
   fetchVideo(ctx: StateContext<AppStateModel>, action: FetchVideo) {
+    const newState = iassign(ctx.getState(), draft => {
+      draft.currentVideo = null;
+      draft.videoComments = null;
+      return draft;
+    });
+    ctx.setState(newState);
     return this.videoDataService.fetchVideo(action.id).pipe(tap(video => {
       const newState = iassign(ctx.getState(), draft => {
         draft.currentVideo = video;
@@ -123,6 +134,10 @@ export class AppState {
 
   @Action(FetchHomeVideos)
   fetchHomeVideos(ctx: StateContext<AppStateModel>, action: FetchHomeVideos) {
+    ctx.setState(iassign(ctx.getState(), draft => {
+      draft.homeVideos = null;
+      return draft;
+    }));
     return this.videoDataService.fetchVideos(action.query, action.category).pipe(tap(videos => {
       const newState = iassign(ctx.getState(), draft => {
         draft.homeVideos = videos;
@@ -180,6 +195,10 @@ export class AppState {
 
   @Action(CommentAdded)
   commentAdded(ctx: StateContext<AppStateModel>, action: CommentAdded) {
+    ctx.setState(iassign(ctx.getState(), draft => {
+      draft.videoComments = null;
+      return draft;
+    }));
     return this.videoDataService.addComment(action.videoId, action.comment).pipe(tap(likes => {
       return ctx.dispatch(new FetchVideoComments(action.videoId));
     }));

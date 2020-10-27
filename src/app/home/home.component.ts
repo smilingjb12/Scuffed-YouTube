@@ -12,7 +12,7 @@ import { AppState } from '../app.state';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public videos$: Observable<Video[]>;
+  public videos: Video[];
   public categories$: Observable<string[]>;
   public selectedCategory: string;
 
@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
     private store: Store) { }
 
   public ngOnInit(): void {
-    this.videos$ = this.store.select(AppState.getHomeVideos);
+    this.store.select(AppState.getHomeVideos)
+      .subscribe(videos => this.videos = videos);
     this.categories$ = this.store.select(AppState.getCategories);
     this.store.select(AppState.getSelectedCategory).subscribe(c => {
       this.selectedCategory = c;
