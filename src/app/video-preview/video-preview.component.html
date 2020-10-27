@@ -1,0 +1,16 @@
+<div class="card h-100" (click)="goToVideo(video)">
+  <img [src]="video.previewUrl" class="card-img-top" alt="{{video.title}}">
+  <div class="card-body">
+    <h5 class="card-title">{{video.title}}</h5>
+    <p class="card-text">
+      <svg class="likes-icon pr-1" width="32" height="32" fill="currentColor">
+        <use xlink:href="assets/bootstrap-icons.svg#eye" />
+      </svg>
+      {{video.views}}
+      <svg class="likes-icon ml-3 pr-1" width="32" height="32" fill="currentColor">
+        <use xlink:href="assets/bootstrap-icons.svg#hand-thumbs-up" />
+      </svg>
+      {{video.likes}}
+    </p>
+  </div>
+</div>

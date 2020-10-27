@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .9;
+  }
+
+  .card-text {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,9 @@
+<h3>Comments <span>({{comments.length}})</span></h3>
+<div class="media mb-3" *ngFor="let comment of comments">
+  <img
+    src="https://cdn2.iconfinder.com/data/icons/people-flat-design/64/Woman-Lady-Girl-Female-Avatar-People-Happy-512.png"
+    class="align-self-start mr-3 avatar" alt="...">
+  <div class="media-body">
+    <p>{{comment.text}}</p>
+  </div>
+</div>

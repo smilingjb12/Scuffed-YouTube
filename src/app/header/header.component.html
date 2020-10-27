@@ -1,0 +1,28 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" routerLink="">Youtube</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="navbar-nav actions px-3">
+    <li class="nav-item text-nowrap">
+      <span class="mr-2">
+        <svg class="likes-icon" width="24" height="24" fill="#fff">
+          <use xlink:href="assets/bootstrap-icons.svg#hand-thumbs-up" />
+        </svg>
+        <span class="ml-2">{{stats.liked}}</span>
+      </span>
+    </li>
+    <li class="nav-item text-nowrap">
+      <span class="mr-2">
+        <svg class="watches-icon" width="24" height="24" fill="#fff">
+          <use xlink:href="assets/bootstrap-icons.svg#camera-video" />
+        </svg>
+        <span class="ml-2">{{stats.watched}}</span>
+      </span>
+    </li>
+    <li class="nav-item text-nowrap ml-5">
+      <a class="nav-link" routerLink="trends">Trends</a>
+    </li>
+  </ul>
+</nav>

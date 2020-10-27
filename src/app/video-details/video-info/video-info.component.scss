@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.title {
+  font-weight: 200;
+}
+
+.likes-icon {
+  cursor: pointer;
+
+  &:hover {
+    color: cornflowerblue;
+  }
+}

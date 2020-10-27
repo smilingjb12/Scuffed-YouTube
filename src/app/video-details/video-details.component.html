@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="jumbotron p-4 p-md-5 text-white backdrop">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <img [src]="video.previewUrl" class="img-fluid w-100" alt="Responsive image">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-2">
+      <app-video-info></app-video-info>
+      <app-video-comments class="mt-5"></app-video-comments>
+    </div>
+
+    <div class="recommended col-sm-2">
+      <app-video-preview *ngFor="let video of recommendedVideos" [video]="video" class="mb-2"></app-video-preview>
+    </div>
+  </div>
+</div>
