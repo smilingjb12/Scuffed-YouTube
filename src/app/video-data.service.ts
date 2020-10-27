@@ -39,14 +39,30 @@ export class VideoDataService {
 
   public likeVideo(id: number): Observable<number> {
     const video = DATABASE.VIDEOS.find(v => v.id === id);
-    video.likes = video.likes + 1;
+    video.likes += 1;
     DATABASE.PROFILE_STATS.liked += 1;
     return of(video.likes);
   }
 
   public watchVideo(id: number): Observable<number> {
-    DATABASE.VIDEOS.find(v => v.id === id).views += 1;
+    const video = DATABASE.VIDEOS.find(v => v.id === id);
+    video.views += 1;
     DATABASE.PROFILE_STATS.watched += 1;
-    return of(DATABASE.PROFILE_STATS.watched);
+    return of(video.likes);
+  }
+
+  public fetchCategories(): Observable<string[]> {
+    return of(cloneDeep(DATABASE.CATEGORIES));
+  }
+
+  public addComment(videoId: number, text: string): Observable<VideoComment> {
+    const comment = {
+      id: DATABASE.COMMENTS.length + 1,
+      videoId,
+      text: text,
+      postedAt: new Date()
+    } as VideoComment;
+    DATABASE.COMMENTS.push(comment);
+    return of(cloneDeep(comment));
   }
 }

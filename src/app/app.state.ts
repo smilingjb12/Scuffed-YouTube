@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FetchHomeVideos as FetchHomeVideos, FetchProfileStats, FetchRecommendedVideos, FetchVideo, FetchVideoComments, VideoLiked, VideoWatched } from './app.actions';
+import { CategoryToggled, CommentAdded, FetchCategories, FetchHomeVideos as FetchHomeVideos, FetchProfileStats, FetchRecommendedVideos, FetchVideo, FetchVideoComments, VideoLiked, VideoWatched } from './app.actions';
 import { VideoDataService } from './video-data.service';
 import iassign from 'immutable-assign';
 import { tap } from 'rxjs/operators';
@@ -13,7 +13,9 @@ interface AppStateModel {
   currentVideo: Video;
   recommendedVideos: Video[];
   profileStats: ProfileStats;
-  videoComments: VideoComment[]
+  videoComments: VideoComment[];
+  categories: string[],
+  selectedCategory: string
 }
 
 @State<AppStateModel>({
@@ -27,11 +29,23 @@ interface AppStateModel {
     profileStats: {
       watched: 0,
       liked: 0
-    }
+    },
+    categories: [],
+    selectedCategory: null
   }
 })
 @Injectable()
 export class AppState {
+  @Selector()
+  public static getSelectedCategory(state: AppStateModel): string {
+    return state.selectedCategory;
+  }
+
+  @Selector()
+  public static getCategories(state: AppStateModel): string[] {
+    return state.categories;
+  }
+
   @Selector()
   public static getVideoComments(state: AppStateModel): VideoComment[] {
     return state.videoComments;
@@ -60,6 +74,30 @@ export class AppState {
   constructor(
     private videoDataService: VideoDataService,
     private profileDataService: ProfileDataService) { }
+
+  @Action(CategoryToggled)
+  categoryToggled(ctx: StateContext<AppStateModel>, action: CategoryToggled) {
+    const newState = iassign(ctx.getState(), draft => {
+      if (draft.selectedCategory === action.category) {
+        draft.selectedCategory = null;
+      } else {
+        draft.selectedCategory = action.category;
+      }
+      return draft;
+    });
+    ctx.setState(newState);
+  }
+
+  @Action(FetchCategories)
+  fetchCategories(ctx: StateContext<AppStateModel>, action: FetchCategories) {
+    return this.videoDataService.fetchCategories().pipe(tap(categories => {
+      const newState = iassign(ctx.getState(), draft => {
+        draft.categories = categories;
+        return draft;
+      });
+      ctx.setState(newState);
+    }));
+  }
 
   @Action(FetchVideoComments)
   fetchVideoComments(ctx: StateContext<AppStateModel>, action: FetchVideoComments) {
@@ -137,6 +175,13 @@ export class AppState {
       });
       ctx.setState(newState);
       return ctx.dispatch(new FetchProfileStats());
+    }));
+  }
+
+  @Action(CommentAdded)
+  commentAdded(ctx: StateContext<AppStateModel>, action: CommentAdded) {
+    return this.videoDataService.addComment(action.videoId, action.comment).pipe(tap(likes => {
+      return ctx.dispatch(new FetchVideoComments(action.videoId));
     }));
   }
 }

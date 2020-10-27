@@ -13,6 +13,7 @@ import { VideoDetailsComponent } from './video-details/video-details.component';
 import { HeaderComponent } from './header/header.component';
 import { VideoInfoComponent } from './video-details/video-info/video-info.component';
 import { VideoCommentsComponent } from './video-details/video-comments/video-comments.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { VideoCommentsComponent } from './video-details/video-comments/video-com
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgxsModule.forRoot([AppState])
   ],
   providers: [],

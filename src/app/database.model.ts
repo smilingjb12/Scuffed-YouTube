@@ -48,5 +48,9 @@ mymusicsheet.com`,
   PROFILE_STATS: {
     watched: 1,
     liked: 2
-  } as ProfileStats
+  } as ProfileStats,
+  CATEGORIES: [
+    'Animals',
+    'Music'
+  ]
 }

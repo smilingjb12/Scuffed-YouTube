@@ -29,9 +29,11 @@ export class VideoDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
       const videoId = parseInt(params.id);
-      this.store.dispatch(new VideoWatched(videoId));
-      this.store.dispatch(new FetchVideo(videoId));
-      this.store.dispatch(new FetchRecommendedVideos(videoId));
+      this.store.dispatch(new FetchVideo(videoId))
+        .subscribe(() => {
+          this.store.dispatch(new FetchRecommendedVideos(videoId));
+          this.store.dispatch(new VideoWatched(videoId));
+        });
     });
   }
 }

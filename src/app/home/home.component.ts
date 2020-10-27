@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FetchHomeVideos } from '../app.actions';
+import { CategoryToggled, FetchCategories, FetchHomeVideos } from '../app.actions';
 import { Video } from '../app.model';
 import { AppState } from '../app.state';
 
@@ -13,13 +13,30 @@ import { AppState } from '../app.state';
 })
 export class HomeComponent implements OnInit {
   public videos$: Observable<Video[]>;
+  public categories$: Observable<string[]>;
+  public selectedCategory: string;
 
   constructor(
-    private store: Store,
-    private router: Router) { }
+    private store: Store) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.videos$ = this.store.select(AppState.getHomeVideos);
+    this.categories$ = this.store.select(AppState.getCategories);
+    this.store.select(AppState.getSelectedCategory).subscribe(c => {
+      this.selectedCategory = c;
+    });
     this.store.dispatch(new FetchHomeVideos(null, null));
+    this.store.dispatch(new FetchCategories());
+  }
+
+  public isSelected(category: string): boolean {
+    return category === this.selectedCategory;
+  }
+
+  public toggleCategory(category: string): void {
+    this.store.dispatch(new CategoryToggled(category))
+      .subscribe(() => {
+        this.store.dispatch(new FetchHomeVideos(null, this.selectedCategory));
+      });
   }
 }

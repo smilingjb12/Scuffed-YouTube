@@ -32,3 +32,18 @@ export class VideoWatched {
   static readonly type = 'VideoWatched';
   constructor(public videoId: number) { }
 }
+
+export class CommentAdded {
+  static readonly type = 'CommentAdded';
+  constructor(public comment: string, public videoId: number) { }
+}
+
+export class FetchCategories {
+  static readonly type = 'FetchCategories';
+  constructor() { }
+}
+
+export class CategoryToggled {
+  static readonly type = 'CategoryToggled';
+  constructor(public category: string) { }
+}

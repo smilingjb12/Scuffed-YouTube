@@ -1,5 +1,13 @@
 <div class="container mt-4">
-  <div class="row">
-    <app-video-preview class="col-4 mb-4" [video]="video" *ngFor="let video of videos$ | async"></app-video-preview>
+  <div class="row home">
+    <div class="mb-3">
+      <button type="button" class="btn btn-light mr-2" (click)="toggleCategory(category)"
+        [class.btn-primary]="selectedCategory === category"
+        [ngClass]="{'btn-light': !isSelected(category), 'btn-primary': isSelected(category)}"
+        *ngFor="let category of categories$ | async">{{category}}</button>
+    </div>
+    <div class="videos">
+      <app-video-preview class="col-4 mb-4" [video]="video" *ngFor="let video of videos$ | async"></app-video-preview>
+    </div>
   </div>
 </div>
